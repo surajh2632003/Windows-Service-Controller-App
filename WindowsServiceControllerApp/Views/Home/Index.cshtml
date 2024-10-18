@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Service Management";
+}
+
+<h2>Service Management</h2>
+
+<p>Current Service Status: @ViewBag.ServiceStatus</p>
+
+<!-- Form to start the service -->
+<form action="/Home/StartService" method="post">
+    <button type="submit">Start Service</button>
+</form>
+
+<!-- Form to stop the service -->
+<form action="/Home/StopService" method="post">
+    <button type="submit">Stop Service</button>
+</form>
+
+<!-- Button to check the service status via AJAX -->
+<form id="checkStatusForm" method="post">
+    <button type="button" onclick="checkServiceStatus()">Check Service Status</button>
+</form>
+
+<!-- Area where the service status will be displayed -->
+<div id="serviceStatusArea">
+    <!-- The status message will be dynamically updated here -->
+</div>
+
+<!-- JavaScript to handle the AJAX request -->
+<script>
+    function checkServiceStatus() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/CheckServiceStatus",
+            success: function (response) {
+                $('#serviceStatusArea').html(response);
+            },
+            error: function (xhr, status, error) {
+                $('#serviceStatusArea').html("Error checking service status.");
+            }
+        });
+    }
+</script>
+
+<p>@ViewBag.Message</p>
